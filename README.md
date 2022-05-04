@@ -35,6 +35,9 @@ eth_addr_accounts=sd.get_eth_addr_accounts("justyy")
 print(eth_addr_accounts)
 #=》{'account': 'justyy', 'owner': '0x634befaed597ccafb1899ac013c28e0dd8aeef6c', 'posting': '0x087eb3e28c2fdb8bde6184612f5ae6f38ba7005b', 'active': '0xab2b0b1305c279dd2c6af16fc3e9d22e5d98d3d2'}
 
-
+#从steem公钥获得对应tron地址
+stm="STM7UpXLm8WGaBWZmcnCYD88zesBoXhGR6eV5HP6tKxtpmRhPfSit"
+tron_addr=sd.get_tron_addr_fromsteem(stm)
+print(tron_addr)
 
 ````
