@@ -1,5 +1,6 @@
 import hashlib
-from base58_steem import Base58,gphBase58CheckEncode,base58CheckEncode,gphBase58CheckDecode,base58CheckDecode
+from base58_utils.base58_steem import Base58,gphBase58CheckEncode,base58CheckEncode,gphBase58CheckDecode,base58CheckDecode
+from base58_utils.base58_tron import Base58ChecksumError, Base58Decoder, Base58Encoder
 from binascii import hexlify, unhexlify
 import ecdsa
 from Crypto.Hash import keccak
@@ -89,6 +90,16 @@ def get_eth_addr_fromsteem(addr_steem):
     address = get_eth_addr(uncompressed_key)
     return address
 
+#从steem公钥获得对应tron地址
+def get_tron_addr_fromsteem(addr_steem):
+    s = addr_steem.replace("STM", "")
+    raw_compr_pub = gphBase58CheckDecode(s)
+    uncompressed_key = get_uncompressed_key(raw_compr_pub)
+    address = get_eth_addr(uncompressed_key)
+    addr = address.replace("0x", "")
+    addrs = Base58Encoder.CheckEncode(b"\x41" + bytes.fromhex(addr))
+    return addrs
+
 #获得某个用户公钥对应的eth地址
 def get_eth_addr_accounts(accounts):
     nodes = 'https://api.justyy.com'
@@ -103,3 +114,5 @@ def get_eth_addr_accounts(accounts):
            "posting":get_eth_addr_fromsteem(posting),
            "active":get_eth_addr_fromsteem(active)}
     return addrs
+
+
