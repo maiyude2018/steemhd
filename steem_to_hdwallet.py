@@ -1,6 +1,9 @@
 import hashlib
 from base58_utils.base58_steem import Base58,gphBase58CheckEncode,base58CheckEncode,gphBase58CheckDecode,base58CheckDecode
 from base58_utils.base58_tron import Base58ChecksumError, Base58Decoder, Base58Encoder
+from base58_utils.bech32_ex import Bech32ChecksumError
+from base58_utils.bech32 import Bech32Decoder, Bech32Encoder
+from base58_utils.cypto import CryptoUtils
 from binascii import hexlify, unhexlify
 import ecdsa
 from Crypto.Hash import keccak
@@ -98,6 +101,13 @@ def get_tron_addr_fromsteem(addr_steem):
     address = get_eth_addr(uncompressed_key)
     addr = address.replace("0x", "")
     addrs = Base58Encoder.CheckEncode(b"\x41" + bytes.fromhex(addr))
+    return addrs
+
+#从steem公钥获得对应cosmos地址
+def get_cosmos_addr_fromsteem(addr_steem):
+    s = addr_steem.replace("STM", "")
+    raw_compr_pub = gphBase58CheckDecode(s)
+    addrs = Bech32Encoder.Encode("cosmos", CryptoUtils.Hash160(bytes.fromhex(raw_compr_pub)))
     return addrs
 
 #获得某个用户公钥对应的eth地址
