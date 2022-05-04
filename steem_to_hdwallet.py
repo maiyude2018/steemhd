@@ -98,9 +98,8 @@ def get_eth_addr_accounts(accounts):
     owner = rjson[0]["owner"]["key_auths"][0][0]
     posting = rjson[0]["posting"]["key_auths"][0][0]
     active = rjson[0]["active"]["key_auths"][0][0]
-    addrs={"owner":get_eth_addr_fromsteem(owner),
+    addrs={"account":accounts,
+           "owner":get_eth_addr_fromsteem(owner),
            "posting":get_eth_addr_fromsteem(posting),
            "active":get_eth_addr_fromsteem(active)}
     return addrs
-
-
