@@ -45,4 +45,8 @@ stm="STM7UpXLm8WGaBWZmcnCYD88zesBoXhGR6eV5HP6tKxtpmRhPfSit"
 tron_addr=sd.get_tron_addr_fromsteem(stm)
 print(tron_addr)
 
+#从steem公钥获得对应cosmos地址
+stm="STM7UpXLm8WGaBWZmcnCYD88zesBoXhGR6eV5HP6tKxtpmRhPfSit"
+cosmos_addr=sd.get_cosmos_addr_fromsteem(stm)
+print(cosmos_addr)
 ````
