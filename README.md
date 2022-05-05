@@ -3,7 +3,7 @@
 - 计算steem公私钥的工具
 - 支持把steem的公钥按照hdwallet的规则转换为其他链的地址
 
-#### 目前支持
+#### 目前支持的地址转换
  - STEEM to ETH
  - STEEM to TRON
  - STEEM to COSMOS
