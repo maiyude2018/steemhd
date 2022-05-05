@@ -114,6 +114,12 @@ def get_cosmos_addr_fromsteem(addr_steem):
     addrs = Bech32Encoder.Encode("cosmos", CryptoUtils.Hash160(bytes.fromhex(raw_compr_pub)))
     return addrs
 
+#从公钥获得对应cosmos地址
+def get_cosmosaddr_frompubkey(hrp,raw_compr_pub):
+    addrs = Bech32Encoder.Encode(hrp, CryptoUtils.Hash160(bytes.fromhex(raw_compr_pub)))
+    return addrs
+
+
 #从ETH地址获得对应tron地址
 def eth_to_tron(wallet: str) -> str:
     addr = wallet.replace("0x", "")
@@ -207,3 +213,7 @@ def eth_to_bech32(wallet: str, prefix: str) -> str:
     except Exception:
         return None
     return bech32_address
+
+
+
+
