@@ -140,8 +140,12 @@ def hd_wallet_CreateFromMnemonic(mnemonics,hdpath,addr_num,coins):
         address = public_key.address()
     elif coins == "TRON":
         address = sd.eth_to_tron(public_key.address())
-    elif coins == "COSMOS":
-        address = sd.get_cosmosaddr_frompubkey("cosmos",binascii.hexlify(bytes(public_key)).decode("utf-8"))
+    elif "COSMOS" in coins:
+        if coins == "COSMOS":
+            address = sd.get_cosmosaddr_frompubkey("cosmos",binascii.hexlify(bytes(public_key)).decode("utf-8"))
+        else:
+            coins=coins.replace("COSMOS_","")
+            address = sd.get_cosmosaddr_frompubkey(coins.lower(), binascii.hexlify(bytes(public_key)).decode("utf-8"))
     elif coins == "EVMOS":
         address = [public_key.address(),sd.eth_to_bech32(public_key.address(), prefix="evmos")]
     elif coins == "STEEM":
@@ -168,8 +172,12 @@ def hd_wallet_CreateFromprivatekey(private_key,coins):
         address = public_key.address()
     elif coins == "TRON":
         address = sd.eth_to_tron(public_key.address())
-    elif coins == "COSMOS":
-        address = sd.get_cosmosaddr_frompubkey("cosmos",binascii.hexlify(bytes(public_key)).decode("utf-8"))
+    elif "COSMOS" in coins:
+        if coins == "COSMOS":
+            address = sd.get_cosmosaddr_frompubkey("cosmos", binascii.hexlify(bytes(public_key)).decode("utf-8"))
+        else:
+            coins = coins.replace("COSMOS_", "")
+            address = sd.get_cosmosaddr_frompubkey(coins.lower(), binascii.hexlify(bytes(public_key)).decode("utf-8"))
     elif coins == "EVMOS":
         address = [public_key.address(),sd.eth_to_bech32(public_key.address(), prefix="evmos")]
     elif coins == "STEEM":
