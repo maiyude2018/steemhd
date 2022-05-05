@@ -1,19 +1,23 @@
 import hashlib
 from base58_utils.base58_steem import Base58,gphBase58CheckEncode,base58CheckEncode,gphBase58CheckDecode,base58CheckDecode
 from base58_utils.base58_tron import Base58ChecksumError, Base58Decoder, Base58Encoder
-from base58_utils.bech32_ex import Bech32ChecksumError
 from base58_utils.bech32 import Bech32Decoder, Bech32Encoder
 from base58_utils.cypto import CryptoUtils
 from binascii import hexlify, unhexlify
 import ecdsa
 from Crypto.Hash import keccak
 import requests
+import binascii
+from enum import Enum
 
 
 #从steem私钥获得对应eth私钥
 def get_eth_privkey(wif):
     return base58CheckDecode(wif)
 
+#从eth私钥获得对应steem私钥
+def get_steem_privkey(privkey):
+    return base58CheckEncode(0x80, privkey)
 
 #从steem私钥获得公钥
 def get_pubkey(wif):
@@ -110,6 +114,11 @@ def get_cosmos_addr_fromsteem(addr_steem):
     addrs = Bech32Encoder.Encode("cosmos", CryptoUtils.Hash160(bytes.fromhex(raw_compr_pub)))
     return addrs
 
+#从ETH地址获得对应tron地址
+def eth_to_tron(wallet: str) -> str:
+    addr = wallet.replace("0x", "")
+    return Base58Encoder.CheckEncode(b"\x41" + bytes.fromhex(addr))
+
 #获得某个用户公钥对应的eth地址
 def get_eth_addr_accounts(accounts):
     nodes = 'https://api.justyy.com'
@@ -126,3 +135,75 @@ def get_eth_addr_accounts(accounts):
     return addrs
 
 
+class Encoding(Enum):
+    """Enumeration type to list the various supported encodings."""
+    BECH32 = 1
+    BECH32M = 2
+
+def bech32_polymod(values):
+    """Internal function that computes the Bech32 checksum."""
+    generator = [0x3b6a57b2, 0x26508e6d, 0x1ea119fa, 0x3d4233dd, 0x2a1462b3]
+    chk = 1
+    for value in values:
+        top = chk >> 25
+        chk = (chk & 0x1ffffff) << 5 ^ value
+        for i in range(5):
+            chk ^= generator[i] if ((top >> i) & 1) else 0
+    return chk
+
+def convertbits(data, frombits, tobits, pad=True):
+    """General power-of-2 base conversion."""
+    acc = 0
+    bits = 0
+    ret = []
+    maxv = (1 << tobits) - 1
+    max_acc = (1 << (frombits + tobits - 1)) - 1
+    for value in data:
+        if value < 0 or (value >> frombits):
+            return None
+        acc = ((acc << frombits) | value) & max_acc
+        bits += frombits
+        while bits >= tobits:
+            bits -= tobits
+            ret.append((acc >> bits) & maxv)
+    if pad:
+        if bits:
+            ret.append((acc << (tobits - bits)) & maxv)
+    elif bits >= frombits or ((acc << (tobits - bits)) & maxv):
+        return None
+
+    return ret
+
+def bech32_encode(hrp, data, spec):
+    """Compute a Bech32 string given HRP and data values."""
+    CHARSET = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l'
+    combined = data + bech32_create_checksum(hrp, data, spec)
+    return hrp + '1' + ''.join([CHARSET[d] for d in combined])
+
+def bech32_hrp_expand(hrp):
+    """Expand the HRP into values for checksum computation."""
+    return [ord(x) >> 5 for x in hrp] + [0] + [ord(x) & 31 for x in hrp]
+
+def bech32_create_checksum(hrp, data, spec):
+    """Compute the checksum values given HRP and data."""
+    BECH32M_CONST = 0x2bc830a3
+    values = bech32_hrp_expand(hrp) + data
+    const = BECH32M_CONST if spec == Encoding.BECH32M else 1
+    polymod = bech32_polymod(values + [0, 0, 0, 0, 0, 0]) ^ const
+    return [(polymod >> 5 * (5 - i)) & 31 for i in range(6)]
+
+def eth_to_bech32(wallet: str, prefix: str) -> str:
+    splitted = wallet.split('0x')
+
+    if len(splitted) == 2:
+        raw_address = splitted[1]
+    else:
+        raw_address = wallet
+    try:
+        array = binascii.unhexlify(raw_address)
+        words = [x for x in array]
+        bech32_words = convertbits(words, 8, 5)
+        bech32_address = bech32_encode(prefix, bech32_words, Encoding.BECH32)
+    except Exception:
+        return None
+    return bech32_address
