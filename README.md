@@ -4,8 +4,8 @@
  - STEEM to ETH
  - STEEM to TRON
  - STEEM to COSMOS
- - ETH TO EVMOS
- - ETH TO TRON
+ - ETH to EVMOS
+ - ETH to TRON
 
 #### 使用示例
 
