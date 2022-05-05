@@ -89,62 +89,72 @@ mnemonics = "horn bonus still lobster exclude submit minimum above soap pilot an
 #ETH
 addr_num=0
 coins="ETH"
+print(coins)
 PATH=ETH_DERIVATION_PATH
 wallet=hd_wallet_CreateFromMnemonic(mnemonics,PATH,addr_num,coins)
-print(wallet)
+print(wallet,"\n")
 private_key = "2c34e1161d70404fd5d8ae29d1c15cfb36b6e1d4c0134b25c8edd6f7a87c35d6"
 wallet=hd_wallet_CreateFromprivatekey(private_key,coins)
 print(wallet)
+print("----------------------------------------------------\n")
 
 #TRON
 coins="TRON"
+print(coins)
 PATH=TRON_DERIVATION_PATH
 wallet=hd_wallet_CreateFromMnemonic(mnemonics,PATH,addr_num,coins)
-print(wallet)
+print(wallet,"\n")
 private_key = "29efb52958f443e522fe52b89856c601c41b8910a0ef1d7f8b9beb2f11a8e684"
 wallet=hd_wallet_CreateFromprivatekey(private_key,coins)
 print(wallet)
+print("----------------------------------------------------\n")
 
 #COSMOS
 coins="COSMOS"
+print(coins)
 PATH=COSMOS_DERIVATION_PATH
 wallet=hd_wallet_CreateFromMnemonic(mnemonics,PATH,addr_num,coins)
-print(wallet)
+print(wallet,"\n")
 private_key = "1f9d07b9ca4f99a0949302c428cefe67c90fc16ab53c3776e5f660a2dbb2e8f3"
 wallet=hd_wallet_CreateFromprivatekey(private_key,coins)
 print(wallet)
+print("----------------------------------------------------\n")
 
 #EVMOS
 addr_num=0
 coins="EVMOS"
+print(coins)
 PATH=ETH_DERIVATION_PATH
 wallet=hd_wallet_CreateFromMnemonic(mnemonics,PATH,addr_num,coins)
-print(wallet)
+print(wallet,"\n")
 private_key = "2c34e1161d70404fd5d8ae29d1c15cfb36b6e1d4c0134b25c8edd6f7a87c35d6"
 wallet=hd_wallet_CreateFromprivatekey(private_key,coins)
 print(wallet)
+print("----------------------------------------------------\n")
 
 #STEEM
 addr_num=0
 coins="STEEM"
+print(coins)
 PATH=ETH_DERIVATION_PATH
 wallet=hd_wallet_CreateFromMnemonic(mnemonics,PATH,addr_num,coins)
-print(wallet)
+print(wallet,"\n")
 private_key = "2c34e1161d70404fd5d8ae29d1c15cfb36b6e1d4c0134b25c8edd6f7a87c35d6"
 wallet=hd_wallet_CreateFromprivatekey(private_key,coins)
 print(wallet)
+print("----------------------------------------------------\n")
 
 #COSMOS系，hdpath = "m/44'/118'/0'/0"的链
-#例AKASH
+#例AKASH,格式：COSMOS_AKASH
 coins="COSMOS_AKASH"
+print(coins)
 PATH=COSMOS_DERIVATION_PATH
 wallet=hd_wallet_CreateFromMnemonic(mnemonics,PATH,addr_num,coins)
-print(wallet)
+print(wallet,"\n")
 private_key = "1f9d07b9ca4f99a0949302c428cefe67c90fc16ab53c3776e5f660a2dbb2e8f3"
 wallet=hd_wallet_CreateFromprivatekey(private_key,coins)
 print(wallet)
-
-
+print("----------------------------------------------------\n")
 ````
 
 
