@@ -1,9 +1,9 @@
 ### 这是一个可以计算steem公私钥的工具，支持把steem的公钥按照hdwallet的规则转换为其他链的地址
 
 #### 目前支持
- - steem to ETH
- - steem to TRON
- - steem to COSMOS
+ - STEEM to ETH
+ - STEEM to TRON
+ - STEEM to COSMOS
  - ETH TO EVMOS
  - ETH TO TRON
 
