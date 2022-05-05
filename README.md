@@ -134,7 +134,7 @@ private_key = "2c34e1161d70404fd5d8ae29d1c15cfb36b6e1d4c0134b25c8edd6f7a87c35d6"
 wallet=hd_wallet_CreateFromprivatekey(private_key,coins)
 print(wallet)
 
-#COSMOS系，"m/44'/118'/0'/0"的地址
+#COSMOS系，hdpath = "m/44'/118'/0'/0"的地址
 #例AKASH
 coins="COSMOS_AKASH"
 PATH=COSMOS_DERIVATION_PATH
