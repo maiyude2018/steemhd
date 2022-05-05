@@ -31,6 +31,21 @@ pri_key="5JaRW6KRjMqj5bxCQAn37zZg76bDfoteSwZvP64j1ApSZaFtmKs"
 eth_key=sd.get_eth_privkey(pri_key)
 print(eth_key)
 
+#从eth私钥获得对应steem私钥
+privkey="6437ac6e07f7411e757fbc0113656c001e302ebca194fd944d45375f1ae639ae"
+steem_key=sd.get_steem_privkey(privkey)
+print(steem_key)
+
+#从ETH地址得到evmos地址
+raw_address="0xdd96de0d29092cbbf11d4739ec0d440752bdd307"
+evmos_addr=sd.eth_to_bech32(raw_address, prefix="evmos")
+print(evmos_addr)
+
+#从ETH地址获得对应tron地址
+raw_address="0xdd96de0d29092cbbf11d4739ec0d440752bdd307"
+tron_addr = sd.eth_to_tron(raw_address)
+print(tron_addr)
+
 #获得某个用户公钥对应的eth地址
 eth_addr_accounts=sd.get_eth_addr_accounts("justyy")
 print(eth_addr_accounts)
