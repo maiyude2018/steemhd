@@ -156,7 +156,6 @@ private_key = "1f9d07b9ca4f99a0949302c428cefe67c90fc16ab53c3776e5f660a2dbb2e8f3"
 wallet=hd_wallet_CreateFromprivatekey(private_key,coins)
 print(wallet)
 print("----------------------------------------------------\n")
-````
 
 #TERRA
 coins="COSMOS_TERRA"
@@ -168,5 +167,6 @@ private_key = "1f9d07b9ca4f99a0949302c428cefe67c90fc16ab53c3776e5f660a2dbb2e8f3"
 wallet=hd_wallet_CreateFromprivatekey(private_key,coins)
 print(wallet)
 print("----------------------------------------------------\n")
+
 ````
 
