@@ -16,6 +16,7 @@
  - TRON
  - EVMOS
  - COSMOS
+ - TERRA
  - 大部分cosmos系的链
 
 #### 使用示例
