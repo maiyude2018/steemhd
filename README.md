@@ -157,4 +157,15 @@ print(wallet)
 print("----------------------------------------------------\n")
 ````
 
+#TERRA
+coins="COSMOS_TERRA"
+print(coins)
+PATH="m/44'/330'/0'/0"
+wallet=hd_wallet_CreateFromMnemonic(mnemonics,PATH,addr_num,coins)
+print(wallet,"\n")
+private_key = "1f9d07b9ca4f99a0949302c428cefe67c90fc16ab53c3776e5f660a2dbb2e8f3"
+wallet=hd_wallet_CreateFromprivatekey(private_key,coins)
+print(wallet)
+print("----------------------------------------------------\n")
+````
 
