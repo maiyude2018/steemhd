@@ -67,7 +67,6 @@ def pow_mod(x, y, z):
 #从compressed_key获得uncompressed_key
 def get_uncompressed_key(compressed_key):
     Pcurve = 2 ** 256 - 2 ** 32 - 2 ** 9 - 2 ** 8 - 2 ** 7 - 2 ** 6 - 2 ** 4 - 1
-
     y_parity = int(compressed_key[:2]) - 2
     x = int(compressed_key[2:], 16)
 
@@ -77,11 +76,18 @@ def get_uncompressed_key(compressed_key):
 
     if y % 2 != y_parity:
         y = -y % Pcurve
-    uncompressed_key = '04{:x}{:x}'.format(x, y)
+    left = '{:x}'.format(x)
+    right = '{:x}'.format(y)
+    if len(left) != 64:
+        left = "0" + left
+    if len(right) != 64:
+        right = "0" + right
+    uncompressed_key = "04" + left + right
     return uncompressed_key
 
 #从uncompressed_key获得eth地址
 def get_eth_addr(uncompressed_key):
+    #print(uncompressed_key)
     keccak_hash = keccak.new(digest_bits=256)
     public_key = uncompressed_key[2:]
     public_key = bytes.fromhex(public_key)
@@ -134,10 +140,12 @@ def get_eth_addr_accounts(accounts):
     owner = rjson[0]["owner"]["key_auths"][0][0]
     posting = rjson[0]["posting"]["key_auths"][0][0]
     active = rjson[0]["active"]["key_auths"][0][0]
+    memo=rjson[0]["memo_key"]
     addrs={"account":accounts,
            "owner":get_eth_addr_fromsteem(owner),
            "posting":get_eth_addr_fromsteem(posting),
-           "active":get_eth_addr_fromsteem(active)}
+           "active":get_eth_addr_fromsteem(active),
+           "memo":get_eth_addr_fromsteem(memo)}
     return addrs
 
 
@@ -213,7 +221,3 @@ def eth_to_bech32(wallet: str, prefix: str) -> str:
     except Exception:
         return None
     return bech32_address
-
-
-
-
