@@ -78,11 +78,7 @@ def get_uncompressed_key(compressed_key):
         y = -y % Pcurve
     left = '{:x}'.format(x)
     right = '{:x}'.format(y)
-    if len(left) != 64:
-        left = "0" + left
-    if len(right) != 64:
-        right = "0" + right
-    uncompressed_key = "04" + left + right
+    uncompressed_key = "04" + left.zfill(64) + right.zfill(64)
     return uncompressed_key
 
 #从uncompressed_key获得eth地址
@@ -221,3 +217,7 @@ def eth_to_bech32(wallet: str, prefix: str) -> str:
     except Exception:
         return None
     return bech32_address
+
+
+
+
