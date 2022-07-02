@@ -119,6 +119,7 @@ def mnemonic_to_private_key(mnemonic, str_derivation_path, passphrase=""):
     master_private_key, master_chain_code = bip39seed_to_bip32masternode(bip39seed)
     private_key, chain_code = master_private_key, master_chain_code
     for i in derivation_path:
+        #print("private_key",binascii.hexlify(bytes(private_key)).decode("utf-8"))
         private_key, chain_code = derive_bip32childkey(private_key, chain_code, i)
     return bip39seed,private_key,master_private_key
 
