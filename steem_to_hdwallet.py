@@ -124,8 +124,7 @@ def get_cosmosaddr_frompubkey(hrp,raw_compr_pub):
 
 #从ETH地址获得对应tron地址
 def eth_to_tron(wallet: str) -> str:
-    addr = wallet.replace("0x", "")
-    return Base58Encoder.CheckEncode(b"\x41" + bytes.fromhex(addr))
+    return Base58Encoder.CheckEncode(b"\x41" + bytes.fromhex(wallet[2:]))
 
 #从tron地址获得对应eth地址
 def tron_to_eth(wallet: str) -> str:
