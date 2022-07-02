@@ -70,6 +70,13 @@ raw_address="0xdd96de0d29092cbbf11d4739ec0d440752bdd307"
 tron_addr = sd.eth_to_tron(raw_address)
 print(tron_addr)
 
+
+#从tron地址获得对应eth地址
+raw_address="TWAs4uMQ1bVxksLdoCwkvgCZbqwLM6ScR2"
+eth_addr = sd.tron_to_eth(raw_address)
+print(eth_addr)
+
+
 #获得某个用户公钥对应的eth地址
 eth_addr_accounts=sd.get_eth_addr_accounts("justyy")
 print(eth_addr_accounts)
