@@ -9,6 +9,7 @@ from Crypto.Hash import keccak
 import requests
 import binascii
 from enum import Enum
+from eth_utils import to_checksum_address
 
 
 #从steem私钥获得对应eth私钥
@@ -89,7 +90,7 @@ def get_eth_addr(uncompressed_key):
     public_key = bytes.fromhex(public_key)
     keccak_hash.update(public_key)
     addr = "0x" + keccak_hash.hexdigest()[-40:]
-    return addr
+    return to_checksum_address(addr)
 
 #从steem公钥获得对应eth地址
 def get_eth_addr_fromsteem(addr_steem):
@@ -97,7 +98,7 @@ def get_eth_addr_fromsteem(addr_steem):
     raw_compr_pub = gphBase58CheckDecode(s)
     uncompressed_key = get_uncompressed_key(raw_compr_pub)
     address = get_eth_addr(uncompressed_key)
-    return address
+    return to_checksum_address(address)
 
 #从steem公钥获得对应tron地址
 def get_tron_addr_fromsteem(addr_steem):
@@ -129,7 +130,7 @@ def eth_to_tron(wallet: str) -> str:
 #从tron地址获得对应eth地址
 def tron_to_eth(wallet: str) -> str:
     addr = binascii.hexlify(Base58Decoder.Decode(wallet)).decode("utf-8")
-    return "0x" + addr[2:-8]
+    return to_checksum_address("0x" + addr[2:-8])
 
 #获得某个用户公钥对应的eth地址
 def get_eth_addr_accounts(accounts):
