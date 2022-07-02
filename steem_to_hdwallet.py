@@ -127,6 +127,12 @@ def eth_to_tron(wallet: str) -> str:
     addr = wallet.replace("0x", "")
     return Base58Encoder.CheckEncode(b"\x41" + bytes.fromhex(addr))
 
+#从tron地址获得对应eth地址
+def tron_to_eth(wallet: str) -> str:
+    addr = binascii.hexlify(Base58Decoder.Decode(wallet)).decode("utf-8")
+    addr = addr[:-8].replace("41", "0x")
+    return addr
+
 #获得某个用户公钥对应的eth地址
 def get_eth_addr_accounts(accounts):
     nodes = 'https://api.justyy.com'
@@ -138,10 +144,10 @@ def get_eth_addr_accounts(accounts):
     active = rjson[0]["active"]["key_auths"][0][0]
     memo=rjson[0]["memo_key"]
     addrs={"account":accounts,
-           "owner":get_eth_addr_fromsteem(owner),
-           "posting":get_eth_addr_fromsteem(posting),
-           "active":get_eth_addr_fromsteem(active),
-           "memo":get_eth_addr_fromsteem(memo)}
+           "owner":[owner,get_eth_addr_fromsteem(owner)],
+           "posting":[posting,get_eth_addr_fromsteem(posting)],
+           "active":[active,get_eth_addr_fromsteem(active)],
+           "memo":[memo,get_eth_addr_fromsteem(memo)]}
     return addrs
 
 
