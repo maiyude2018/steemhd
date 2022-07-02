@@ -130,8 +130,7 @@ def eth_to_tron(wallet: str) -> str:
 #从tron地址获得对应eth地址
 def tron_to_eth(wallet: str) -> str:
     addr = binascii.hexlify(Base58Decoder.Decode(wallet)).decode("utf-8")
-    addr = addr[:-8]
-    return "0x" + addr[2:]
+    return "0x" + addr[2:-8]
 
 #获得某个用户公钥对应的eth地址
 def get_eth_addr_accounts(accounts):
