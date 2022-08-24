@@ -23,7 +23,7 @@
 #### 使用示例
 
 ````
-import steem_to_hdwallet as sd
+import steemhd.steem_to_hdwallet as sd
 
 #从密码计算所有公私钥对
 account="maiyude"
@@ -86,7 +86,7 @@ print(eth_addr_accounts)
 
 #### 生成多链地址使用示例
 ````
-from pyhd import hd_wallet_CreateFromMnemonic,hd_wallet_CreateFromprivatekey
+from steemhd.pyhd import hd_wallet_CreateFromMnemonic,hd_wallet_CreateFromprivatekey
 
 
 ETH_DERIVATION_PATH = "m/44'/60'/0'/0"
