@@ -28,7 +28,7 @@ pip install steemhd
 #### 使用示例
 
 ````
-import steemhd.teem_to_hdwallet as sd
+import steemhd.steem_to_hdwallet as sd
 
 
 #从密码计算所有公私钥对
