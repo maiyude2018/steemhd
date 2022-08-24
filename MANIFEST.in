@@ -1,0 +1,7 @@
+include setup.py
+include README.rst
+#include LICENSE.txt
+include MANIFEST.in
+include *.txt
+recursive-include steemhd *.txt *.py
+prune examples/sample?/build
