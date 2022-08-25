@@ -10,6 +10,7 @@ import requests
 import binascii
 from enum import Enum
 from eth_utils import to_checksum_address
+from steemhd.pyhd import btc_pub_to_addr
 
 #从steem私钥获得对应eth私钥
 def get_eth_privkey(wif):
@@ -109,6 +110,14 @@ def get_eth_addr_fromsteem(addr_steem):
     uncompressed_key = get_uncompressed_key(raw_compr_pub)
     address = get_eth_addr(uncompressed_key)
     return to_checksum_address(address)
+
+
+#从steem公钥获得对应BTC地址
+def get_btc_addr_fromsteem(addr_steem):
+    s = addr_steem.replace("STM", "")
+    raw_compr_pub = gphBase58CheckDecode(s)
+    address = btc_pub_to_addr("00", raw_compr_pub)
+    return address
 
 #从steem公钥获得对应tron地址
 def get_tron_addr_fromsteem(addr_steem):
