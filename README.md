@@ -1,5 +1,8 @@
 ### INSTALL
+
+````
 pip install steemhd
+````
 
 ### Introduction
 This package allows generating mnemonics, seeds, private/public keys and addresses for different types of cryptocurrencies.In particular:
