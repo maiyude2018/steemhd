@@ -10,26 +10,27 @@ This package allows generating mnemonics, seeds, private/public keys and address
 - Steem Public key  <==> Steem Private key
 - Steem Public key  <==> Multichain address
 
-### Supported 
- - STEEM <==> ETH 
+### Supported
+ - STEEM <==> BTC
+ - STEEM <==> ETH
  - STEEM <==> TRON
  - STEEM <==> COSMOS
  - ETH <==> EVMOS
  - ETH <==> TRON
  - TRON <==> ETH
 
- 
+
  ### Supported Coins
  |Coins|hdpath|
  |---|---|
- |STEEM|None| 
- |BTC|"m/44'/0'/0'/0"| 
- |DOGE|"m/44'/3'/0'/0"| 
- |ETH|"m/44'/60'/0'/0"| 
- |TRON|"m/44'/195'/0'/0"| 
- |EVMOS|"m/44'/0'/0'/0"| 
- |COSMOS|"m/44'/118'/0'/0"| 
- |TERRA|"m/44'/330'/0'/0"| 
+ |STEEM|None|
+ |BTC|"m/44'/0'/0'/0"|
+ |DOGE|"m/44'/3'/0'/0"|
+ |ETH|"m/44'/60'/0'/0"|
+ |TRON|"m/44'/195'/0'/0"|
+ |EVMOS|"m/44'/0'/0'/0"|
+ |COSMOS|"m/44'/118'/0'/0"|
+ |TERRA|"m/44'/330'/0'/0"|
 
 #### Example
 
@@ -57,6 +58,11 @@ print(eth_addr)
 stm="STM7UpXLm8WGaBWZmcnCYD88zesBoXhGR6eV5HP6tKxtpmRhPfSit"
 tron_addr=sd.get_tron_addr_fromsteem(stm)
 print(tron_addr)
+
+#Steem Public key  ==> BTC address
+stm="STM7UpXLm8WGaBWZmcnCYD88zesBoXhGR6eV5HP6tKxtpmRhPfSit"
+btc_addr=sd.get_btc_addr_fromsteem(stm)
+print("btc_addr",btc_addr)
 
 #Steem Public key  ==> COSMOS address
 stm="STM7UpXLm8WGaBWZmcnCYD88zesBoXhGR6eV5HP6tKxtpmRhPfSit"
