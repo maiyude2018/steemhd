@@ -17,14 +17,15 @@ This package allows generating mnemonics, seeds, private/public keys and address
 
  
  ### Supported Coins
- - STEEM None
- - BTC  "m/44'/0'/0'/0"
- - DOGE  "m/44'/3'/0'/0"
- - ETH  "m/44'/60'/0'/0"
- - TRON  "m/44'/195'/0'/0"
- - EVMOS  "m/44'/0'/0'/0"
- - COSMOS  "m/44'/118'/0'/0"
- - TERRA "m/44'/330'/0'/0"
+ |  coins   | hdpath  |
+ | STEEM | None | 
+ | BTC | "m/44'/0'/0'/0" | 
+ | DOGE | "m/44'/3'/0'/0" | 
+ | ETH| "m/44'/60'/0'/0" | 
+ | TRON  | "m/44'/195'/0'/0" | 
+ | EVMOS | "m/44'/0'/0'/0" | 
+ | COSMOS |   "m/44'/118'/0'/0" | 
+ | TERRA |  "m/44'/330'/0'/0" | 
 
 #### Example
 
