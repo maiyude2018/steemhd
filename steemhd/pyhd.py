@@ -31,6 +31,7 @@ import codecs
 import ecdsa
 import base58
 
+
 BIP39_PBKDF2_ROUNDS = 2048
 BIP39_SALT_MODIFIER = "mnemonic"
 BIP32_PRIVDEV = 0x80000000
@@ -40,6 +41,24 @@ ETH_DERIVATION_PATH = "m/44'/60'/0'/0"
 COSMOS_DERIVATION_PATH = "m/44'/118'/0'/0"
 TRON_DERIVATION_PATH = "m/44'/195'/0'/0"
 COSMOS_BECH32_HRP = "cosmos"
+
+
+def uncompressed_to_compressed(public_key):
+    x = int(public_key[2:66],16)
+    y = int(public_key[66:],16)
+    xstr = x.to_bytes(32, byteorder='big')
+    parity = y & 1
+    pub_key = (2 + parity).to_bytes(1, byteorder='big') + xstr
+    return binascii.hexlify(pub_key).decode("utf-8")
+
+def get_compressed_pubkey(private_key):
+    if isinstance(private_key, str):
+        private_key = bytes.fromhex(private_key)
+    point = int.from_bytes(private_key, byteorder='big') * BIP32_CURVE.generator
+    xstr = point.x().to_bytes(32, byteorder='big')
+    parity = point.y() & 1
+    pub_key = (2 + parity).to_bytes(1, byteorder='big') + xstr
+    return binascii.hexlify(pub_key).decode("utf-8")
 
 
 class PublicKey:
@@ -132,7 +151,17 @@ def __private_to_public(private_key):
     public_key = codecs.encode(key_bytes, 'hex')
     return public_key
 
-
+def btc_pub_to_addr(network,ecdsaPublicKey):
+    hash256FromECDSAPublicKey = hashlib.sha256(binascii.unhexlify(ecdsaPublicKey)).hexdigest()
+    ridemp160FromHash256 = hashlib.new('ripemd160', binascii.unhexlify(hash256FromECDSAPublicKey))
+    prependNetworkByte = network + ridemp160FromHash256.hexdigest()
+    hash = prependNetworkByte
+    for x in range(1, 3):
+        hash = hashlib.sha256(binascii.unhexlify(hash)).hexdigest()
+    cheksum = hash[:8]
+    appendChecksum = prependNetworkByte + cheksum
+    bitcoinAddress = base58.b58encode(binascii.unhexlify(appendChecksum))
+    return bitcoinAddress.decode('utf8')
 
 def hd_wallet_CreateFromMnemonic(mnemonics,hdpath,addr_num,coins):
     seed_bytes, private_key, master_private_key = mnemonic_to_private_key(mnemonics,str_derivation_path=f'{hdpath}/%s' % str(addr_num))
@@ -189,20 +218,6 @@ def steem_wallet_CreateFromMnemonic(mnemonics,hdpath="m/44'/60'/0'/0"):
             "keys": key
             }
     return json
-
-
-def btc_pub_to_addr(network,ecdsaPublicKey):
-    hash256FromECDSAPublicKey = hashlib.sha256(binascii.unhexlify(ecdsaPublicKey)).hexdigest()
-    ridemp160FromHash256 = hashlib.new('ripemd160', binascii.unhexlify(hash256FromECDSAPublicKey))
-    prependNetworkByte = network + ridemp160FromHash256.hexdigest()
-    hash = prependNetworkByte
-    for x in range(1, 3):
-        hash = hashlib.sha256(binascii.unhexlify(hash)).hexdigest()
-    cheksum = hash[:8]
-    appendChecksum = prependNetworkByte + cheksum
-    bitcoinAddress = base58.b58encode(binascii.unhexlify(appendChecksum))
-    return bitcoinAddress.decode('utf8')
-
 
 def hd_wallet_CreateFromprivatekey(private_key,coins):
     # private_key to Eth address
