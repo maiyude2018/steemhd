@@ -17,7 +17,8 @@ This package allows generating mnemonics, seeds, private/public keys and address
 
  
  ### Supported Coins
- |  coins   | hdpath  |
+ |coins|hdpath|
+ |---|---|
  | STEEM | None | 
  | BTC | "m/44'/0'/0'/0" | 
  | DOGE | "m/44'/3'/0'/0" | 
