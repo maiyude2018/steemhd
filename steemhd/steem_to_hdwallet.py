@@ -1,4 +1,5 @@
-import hashlib
+import hashlib,base58
+import steemhd
 from steemhd.base58_utils.base58_steem import Base58,gphBase58CheckEncode,base58CheckEncode,gphBase58CheckDecode,base58CheckDecode
 from steemhd.base58_utils.base58_tron import Base58ChecksumError, Base58Decoder, Base58Encoder
 from steemhd.base58_utils.bech32 import Bech32Decoder, Bech32Encoder
@@ -10,13 +11,11 @@ import requests
 import binascii
 from enum import Enum
 from eth_utils import to_checksum_address
-from steemhd.pyhd import btc_pub_to_addr
+
 
 #从steem私钥获得对应eth私钥
 def get_eth_privkey(wif):
     return base58CheckDecode(wif)
-
-
 
 #从steem私钥获得对应btc私钥
 def get_btc_privkey(wif):
@@ -81,11 +80,8 @@ def get_uncompressed_key(compressed_key):
     Pcurve = 2 ** 256 - 2 ** 32 - 2 ** 9 - 2 ** 8 - 2 ** 7 - 2 ** 6 - 2 ** 4 - 1
     y_parity = int(compressed_key[:2]) - 2
     x = int(compressed_key[2:], 16)
-
     a = (pow_mod(x, 3, Pcurve) + 7) % Pcurve
-
     y = pow_mod(a, (Pcurve + 1) // 4, Pcurve)
-
     if y % 2 != y_parity:
         y = -y % Pcurve
     left = '{:x}'.format(x)
@@ -116,7 +112,7 @@ def get_eth_addr_fromsteem(addr_steem):
 def get_btc_addr_fromsteem(addr_steem):
     s = addr_steem.replace("STM", "")
     raw_compr_pub = gphBase58CheckDecode(s)
-    address = btc_pub_to_addr("00", raw_compr_pub)
+    address = btc_addr("00", raw_compr_pub)
     return address
 
 #从steem公钥获得对应tron地址
@@ -241,3 +237,15 @@ def eth_to_bech32(wallet: str, prefix: str) -> str:
     except Exception:
         return None
     return bech32_address
+
+def btc_addr(network,ecdsaPublicKey):
+    hash256FromECDSAPublicKey = hashlib.sha256(binascii.unhexlify(ecdsaPublicKey)).hexdigest()
+    ridemp160FromHash256 = hashlib.new('ripemd160', binascii.unhexlify(hash256FromECDSAPublicKey))
+    prependNetworkByte = network + ridemp160FromHash256.hexdigest()
+    hash = prependNetworkByte
+    for x in range(1, 3):
+        hash = hashlib.sha256(binascii.unhexlify(hash)).hexdigest()
+    cheksum = hash[:8]
+    appendChecksum = prependNetworkByte + cheksum
+    bitcoinAddress = base58.b58encode(binascii.unhexlify(appendChecksum))
+    return bitcoinAddress.decode('utf8')
