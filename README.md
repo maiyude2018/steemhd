@@ -232,6 +232,25 @@ PATH=COSMOS_DERIVATION_PATH
 wallet=hd_wallet_CreateFromMnemonic(mnemonics,PATH,addr_num,coins)
 print(wallet,"\n")
 
+#REBUS
+addr_num=0
+coins="REBUS"
+print(coins)
+PATH=ETH_DERIVATION_PATH
+wallet=hd_wallet_CreateFromMnemonic(mnemonics,PATH,addr_num,coins)
+print(wallet,"\n")
+private_key = "2c34e1161d70404fd5d8ae29d1c15cfb36b6e1d4c0134b25c8edd6f7a87c35d6"
+wallet=hd_wallet_CreateFromprivatekey(private_key,coins)
+print(wallet)
+print("----------------------------------------------------\n")
+
+#REBUS Test network
+coins="COSMOS_REBUS"
+print(coins)
+PATH=COSMOS_DERIVATION_PATH
+wallet=hd_wallet_CreateFromMnemonic(mnemonics,PATH,addr_num,coins)
+print(wallet,"\n")
+
 
 ````
 
