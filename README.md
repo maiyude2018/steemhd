@@ -28,7 +28,9 @@ This package allows generating mnemonics, seeds, private/public keys and address
  |DOGE|"m/44'/3'/0'/0"|
  |ETH|"m/44'/60'/0'/0"|
  |TRON|"m/44'/195'/0'/0"|
- |EVMOS|"m/44'/0'/0'/0"|
+ |EVMOS|"m/44'/60'/0'/0"|
+ |REBUS|"m/44'/60'/0'/0"|
+ |REBUS Test|"m/44'/118'/0'/0"|
  |COSMOS|"m/44'/118'/0'/0"|
  |TERRA|"m/44'/330'/0'/0"|
 
