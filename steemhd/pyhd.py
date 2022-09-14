@@ -183,6 +183,8 @@ def hd_wallet_CreateFromMnemonic(mnemonics,hdpath,addr_num,coins):
             address = sd.get_cosmosaddr_frompubkey(coins.lower(), binascii.hexlify(bytes(public_key)).decode("utf-8"))
     elif coins == "EVMOS":
         address = [public_key.address(),sd.eth_to_bech32(public_key.address(), prefix="evmos")]
+    elif coins == "REBUS":
+        address = [public_key.address(),sd.eth_to_bech32(public_key.address(), prefix="rebus")]
     elif coins == "STEEM":
         private_key = sd.get_steem_privkey(private_key)
         address = sd.get_pubkey(private_key)
@@ -242,6 +244,8 @@ def hd_wallet_CreateFromprivatekey(private_key,coins):
             address = sd.get_cosmosaddr_frompubkey(coins.lower(), binascii.hexlify(bytes(public_key)).decode("utf-8"))
     elif coins == "EVMOS":
         address = [public_key.address(),sd.eth_to_bech32(public_key.address(), prefix="evmos")]
+    elif coins == "REBUS":
+        address = [public_key.address(),sd.eth_to_bech32(public_key.address(), prefix="rebus")]
     elif coins == "STEEM":
         private_key = sd.get_steem_privkey(private_key)
         address = sd.get_pubkey(private_key)
